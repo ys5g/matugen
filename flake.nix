@@ -10,13 +10,13 @@
       pkgsFor = nixpkgs.legacyPackages;
     in {
       packages = forAllSystems (system: {
-        default = pkgsFor.${system}.callPackage ./. { };
+        default = pkgsFor.${system}.callPackage ./nix { };
       });
       devShells = forAllSystems (system: {
-        default = pkgsFor.${system}.callPackage ./shell.nix { };
+        default = pkgsFor.${system}.callPackage ./nix/shell.nix { };
       });
       nixosModules = {
-        matugen = import ./module.nix self;
+        matugen = import ./nix/module.nix self;
         default = self.nixosModules.matugen;
       };
     };
