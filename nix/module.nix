@@ -6,7 +6,6 @@ matugen: {
   ...
 } @ args: let
   cfg = config.programs.matugen;
-  osCfg = args.osConfig.programs.matugen or {};
 
   configFormat = pkgs.formats.toml {};
 
