@@ -8,16 +8,16 @@
     let
       forAllSystems = nixpkgs.lib.genAttrs (import systems);
       pkgsFor = nixpkgs.legacyPackages;
+      callPackageForAll = path: forAllSystems (system: {
+        default = pkgsFor.${system}.callPackage path { };
+      });
     in {
-      packages = forAllSystems (system: {
-        default = pkgsFor.${system}.callPackage ./nix { };
-      });
-      devShells = forAllSystems (system: {
-        default = pkgsFor.${system}.callPackage ./nix/shell.nix { };
-      });
-      nixosModules = {
+      packages = callPackageForAll ./nix;
+      devShells = callPackageForAll ./nix/shell.nix;
+      
+      homeManagerModules = rec {
         matugen = import ./nix/module.nix self;
-        default = self.nixosModules.matugen;
+        default = matugen;
       };
     };
 }
