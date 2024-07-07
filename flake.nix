@@ -14,23 +14,18 @@
   }: let
     # Inspired by
     # github:DavHau/nix-portable/5bccc8824c13c8efa97a4ea7ede35da83936c3cc/flake.nix#L23C7-L24C68
-    forAllSystems = function:
-      nixpkgs.lib.genAttrs (import systems) (system:
-        function {
-          inherit system;
-          pkgs = nixpkgs.legacyPackages.${system};
-        });
-
-    pkgsFor = nixpkgs.legacyPackages;
+    forAllSystems = fn:
+      nixpkgs.lib.genAttrs (import systems) (
+        sys:
+        # This calls that function with the pkgs for that system
+          fn nixpkgs.legacyPackages.${sys}
+      );
   in {
-    packages = forAllSystems ({
-      system,
-      pkgs,
-    }: {
+    packages = forAllSystems (pkgs: {
       default = pkgs.callPackage ./nix {};
-      ndgDocs = pkgsFor.${system}.callPackage ./nix/docs.nix {inherit self ndg;};
+      ndgDocs = pkgs.callPackage ./nix/docs.nix {inherit self ndg;};
     });
-    devShells = forAllSystems ({pkgs, ...}: {
+    devShells = forAllSystems (pkgs: {
       default = pkgs.callPackage ./nix/shell.nix {};
     });
 
