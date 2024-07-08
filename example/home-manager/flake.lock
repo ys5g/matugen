@@ -22,17 +22,18 @@
     },
     "matugen": {
       "inputs": {
+        "ndg": [],
         "nixpkgs": [
           "nixpkgs"
         ],
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1720225328,
-        "narHash": "sha256-VE1IdJGtSmmFf3TFziUbZAZJmTPltOfGxIEdLLx7pH4=",
+        "lastModified": 1720461970,
+        "narHash": "sha256-EkAX7UGEbZQEPm+IeMHAO/jt9qbBbYgBFdh8NtCY2k4=",
         "ref": "refs/heads/main",
-        "rev": "607866ea906054b328c2b657ee413d5408b3190b",
-        "revCount": 429,
+        "rev": "4b0c22b4d7da7df6573520cad2a35b164611ddec",
+        "revCount": 435,
         "type": "git",
         "url": "ssh://git@github.com/ys5g/matugen"
       },

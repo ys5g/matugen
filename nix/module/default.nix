@@ -28,7 +28,7 @@
   # Generated toml configuration file
   cfgFile = tomlFormat.generate "matugen-config.toml" cfg.settings;
 
-  genMatugenEnv = args@{
+  genMatugenEnv = args @ {
     wallpaper ? args.currentWallpaperInS12n,
     variant,
     palette,
@@ -171,7 +171,12 @@ in {
 
       # programs.matugen.env = genMatugenEnv cfg;
 
-      home.packages = with cfg; [package /* env */];
+      home.packages = with cfg; [
+        package
+        /*
+        env
+        */
+      ];
 
       xdg.configFile = {
         "matugen/config.toml".source = cfgFile;

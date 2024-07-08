@@ -5,18 +5,8 @@
 }: {
   programs.matugen = {
     enable = true;
-    # Uncomment lines 7-13 and replace keys and values as necessary
-    # programs.matugen.wallpapers should contain at least one key
-    wallpapers = {
-      # would automatically be removed
-      # cat = ./wallpapers/cat.jpg;
-      # beach = ./wallpapers/beach.png;
-      mosaic = "${pkgs.nixos-artwork.wallpapers.mosaic-blue}/share/backgrounds/nixos/nix-wallpaper-mosaic-blue.png";
-    };
-    # programs.matugen.wallpaper(without the 's' at the end) should be a
-    # string that is equal to one of the attribute names in
-    # programs.matugen.wallpapers
-    wallpaper = "mosaic";
+    # This must be the path to the wallpaper
+    wallpaper = "${pkgs.nixos-artwork.wallpapers.mosaic-blue}/share/backgrounds/nixos/nix-wallpaper-mosaic-blue.png";
 
     # Remove these 3 lines if you want to use the default(which
     # is "scheme-tonal-spot")
@@ -24,8 +14,6 @@
 
     # Default is "dark"
     variant = "light";
-
-    useSpecialisations = true;
 
     settings = {
       config = {
