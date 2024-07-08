@@ -59,7 +59,7 @@ in {
         if !cfg.useSpecialisations
         then types.path
         else
-          (types.enum (builtins.attrValues cfg.wallpapers))
+          (types.enum (builtins.attrNames cfg.wallpapers))
           // {
             description = lib.concatStrings [
               "one of the attribute names of `programs.matugen.wallpapers`"
@@ -125,7 +125,7 @@ in {
     settings = mkOption {
       default = {};
       type = tomlFormat.type;
-      example = builtins.fromTOML (builtins.readFile ../../example/config.toml);
+      example = builtins.fromTOML (builtins.readFile ../../example/simple/config.toml);
       description = ''
         Matugen configuration. For help on configuration, see
         <https://github.com/InioX/matugen/wiki/Configuration>
