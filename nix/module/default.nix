@@ -25,10 +25,13 @@
   # Package from this flake
   matugenPkg = self.packages.${pkgs.system}.default;
 
-  genMatugenEnv = {
-    wallpaper,
+  # Generated toml configuration file
+  cfgFile = tomlFormat.generate "matugen-config.toml" cfg.settings;
+
+  genMatugenEnv = args@{
+    wallpaper ? args.currentWallpaperInS12n,
     variant,
-    type,
+    palette,
     ...
   }:
     pkgs.runCommandLocal "${variant}MatugenEnv-${toString wallpaper}" {} ''
@@ -36,10 +39,11 @@
 
       ${lib.getExe matugenPkg} \
         image ${wallpaper} \
+        --config ${cfgFile}
         --quiet \
         --prefix $out \
         --mode ${variant} \
-        --type ${type}
+        --type ${palette}
     '';
 in {
   #############
@@ -135,7 +139,7 @@ in {
 
     env = mkOption {
       type = types.package;
-      default = genMatugenEnv (cfg // {inherit (cfg.settings) type;});
+      default = genMatugenEnv cfg;
       # Hides it from documentation
       visible = false;
       description = "The derivation to extract the populated templates from";
@@ -151,7 +155,7 @@ in {
         {
           # This will fail if config.programs.matugen.wallpaper is not set
           # even though matugen is enabled
-          assertion = !(cfg.wallpaper != null);
+          assertion = cfg.wallpaper != null;
           message = "When matugen is enabled, you must set config.programs.matugen.wallpaper to something";
         }
         {
@@ -165,12 +169,12 @@ in {
         }
       ];
 
-      programs.matugen.env = genMatugenEnv cfg;
+      # programs.matugen.env = genMatugenEnv cfg;
 
-      home.packages = with cfg; [package env];
+      home.packages = with cfg; [package /* env */];
 
       xdg.configFile = {
-        "matugen/config.toml".source = tomlFormat.generate "matugen-config.toml" cfg.settings;
+        "matugen/config.toml".source = cfgFile;
       };
     }
     (lib.mkIf (builtins.length (builtins.attrNames cfg.wallpapers) > 1) {

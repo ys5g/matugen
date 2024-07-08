@@ -33,5 +33,7 @@
       matugen = import ./nix/module {inherit self;};
       default = matugen;
     };
+
+    templates.default.path = ./example/home-manager;
   };
 }

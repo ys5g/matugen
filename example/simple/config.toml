@@ -1,0 +1,16 @@
+[config]
+reload_apps = true
+set_wallpaper = true
+wallpaper_tool = 'Swww'
+swww_options = [
+  "--transition-type",
+  "center",
+]
+
+[config.reload_apps_list]
+gtk_theme = true
+dunst = true
+
+[templates.name1]
+input_path = "../colors.whatever-extension"
+output_path = "~/.config/hello/colors-generated.whatever-extension"
